@@ -204,6 +204,15 @@
         margin: 10px 0;
       }
     }
+    article .content-preview {
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Show only 4 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 6.4em; /* adjust based on font-size & line-height */
+  }
+
   </style>
   <title>Geeky Bytes</title>
 </head>
@@ -216,11 +225,12 @@
 
   <nav>
     <div class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">HTML</a>
-      <a href="#">CSS</a>
-      <a href="#">JavaScript</a>
-      <a href="#">ReactJS</a>
+      <li><a href="{%url 'home' %}">Home</a></li>
+      {%if category%}
+        {%for i in category%}
+        <li><a href="#">{{i}}</a></li>
+        {%endfor%}
+        {%endif%}
     </div>
 
     <div class="search-container">
@@ -229,7 +239,13 @@
 
     <div class="auth-icons">
   {% if user.is_authenticated %}
-    <form method="POST" action="{% url 'logout' %}">
+    <span style="color: #fff; font-weight: 600; margin-right: 10px;">
+      Hello, {{ user.username|capfirst }}
+    </span>
+    <a href="" style="color: #fff; font-weight: 600; padding: 6px 10px; background-color: #28a745; border-radius: 4px; text-decoration: none;">
+    + Add Post
+  </a>
+    <form method="POST" action="{% url 'logout' %}" style="display: inline;">
       {% csrf_token %}
       <button type="submit" title="Logout" aria-label="Logout" style="background:none; border:none; color:#fff; cursor:pointer; display:flex; align-items:center; gap:5px; font-weight:600; font-size:14px; padding:6px 10px; border-radius:4px; transition:background-color 0.3s;">
         <!-- Log Out Icon -->
@@ -270,68 +286,29 @@
 
   <div class="container">
     <main>
+      {%if blog%}
+      {%for i in blog%}
       <article>
-        <h2>HTML</h2>
+        <h2>{{ i.blog_title|capfirst }}</h2>
         <p class="post-meta">
-          Published on December 11, 2023 by GeeksforGeeks
+          Published on {{ i.created_at|date:"F d, Y" }} by {{ i.author.username|capfirst }}
         </p>
-        <p>
-          HTML stands for HyperText Markup Language. It is used to design the web pages. With the help of HTML,
-          you can create a complete website structure. HTML is the combination of Hypertext and Markup language.
-          Hypertext defines the link between the web pages and markup language defines the text document within
-          the tag that define the structure of web pages.
-        </p>
+        <p class="content-preview">{{ i.blog_description }}{{ i.blog_description }}{{ i.blog_description }}</p>
+        <a href="" class="read-more">Read More</a>
       </article>
 
-      <article>
-        <h2>CSS</h2>
-        <p class="post-meta">
-          Published on December 10, 2023 by GeeksforGeeks
-        </p>
-        <p>
-          CSS (Cascading Style Sheets) is used to styles web pages. Cascading Style Sheets are fondly referred
-          to as CSS. The reason for using this is to simplify the process of making web pages presentable. It allows
-          you to apply styles on web pages. More importantly, it enables you to do this independently of the HTML
-          that makes up each web page.
-        </p>
-      </article>
-
-      <article>
-        <h2>JavaScript</h2>
-        <p class="post-meta">
-          Published on December 09, 2023 by GeeksforGeeks
-        </p>
-        <p>
-          JavaScript (JS) is the most popular lightweight, interpreted compiled programming language. It can
-          be used for both Client-side as well as Server-side developments. JavaScript also known as a scripting
-          language for web pages. This JavaScript Tutorial is designed to help both beginners and experienced
-          professionals master the fundamentals of JavaScript and unleash their creativity to build powerful web
-          applications. From basic syntax and data types to advanced topics such as object-oriented programming
-          and DOM manipulation.
-        </p>
-      </article>
-
-      <article>
-        <h2>ReactJS</h2>
-        <p class="post-meta">
-          Published on December 08, 2023 by GeeksforGeeks
-        </p>
-        <p>
-          ReactJS is a declarative, efficient, and flexible JavaScript library for building user interfaces.
-          It is an open-source, component-based front-end library that is responsible only for the view layer
-          of the application. ReactJS is not a framework, it is just a library developed by Facebook to solve
-          some problems that we were facing earlier.
-        </p>
-      </article>
+      {%endfor%}
+      {%endif%}
     </main>
 
     <aside>
       <h2>Recent Posts</h2>
       <ul>
-        <li><a href="#">HTML</a></li>
-        <li><a href="#">CSS</a></li>
-        <li><a href="#">JavaScript</a></li>
-        <li><a href="#">ReactJS</a></li>
+        {%if blog%}
+        {%for i in blog|slice:":5" %}
+        <li><a href="#">{{i.blog_title|capfirst}}</a></li>
+        {%endfor%}
+        {%endif%}
       </ul>
     </aside>
   </div>
