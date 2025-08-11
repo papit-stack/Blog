@@ -7,6 +7,8 @@ def home(request):
     return render(request,'blog.html')
 
 def register_view(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method=="POST":
         first_name=request.POST.get('first_name')
         last_name=request.POST.get('last_name')
@@ -31,6 +33,8 @@ def register_view(request):
     return render(request,'accounts/register.html')
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method=="POST":
         username=request.POST.get('username')
         password=request.POST.get('password')
@@ -44,4 +48,8 @@ def login_view(request):
     return render(request,'accounts/login.html')
 
 def logout_view(request):
-    return render(request,'accounts/login.html')
+    logout(request)
+    return redirect('login')
+
+# def forgot_password(request):
+
