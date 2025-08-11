@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+
+    header {
+      background-color: #ffffff;
+      color: #000000;
+      text-align: center;
+      padding: 20px 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      background-color: #242424;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    nav .nav-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 15px;
+      margin-right: 10px;
+      display: inline-block;
+      font-weight: 500;
+      transition: background-color 0.3s;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      background-color: #444;
+    }
+
+    nav .search-container {
+      position: relative;
+      margin-right: 20px;
+    }
+
+    nav input[type="search"] {
+      padding: 6px 10px;
+      border-radius: 4px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      width: 180px;
+      transition: width 0.3s ease-in-out;
+    }
+
+    nav input[type="search"]:focus {
+      width: 220px;
+    }
+
+    nav .auth-icons {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    nav .auth-icons button {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    nav .auth-icons button:hover {
+      background-color: #444;
+    }
+
+    nav .auth-icons svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 95%;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 6px;
+      min-height: 600px;
+    }
+
+    main {
+      flex: 2;
+      margin-right: 20px;
+    }
+
+    article {
+      margin-bottom: 30px;
+      padding: 20px;
+      border: 1px solid rgb(145, 145, 145);
+      border-radius: 6px;
+      background-color: #fafafa;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    article h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    article p.post-meta {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 15px;
+    }
+
+    article p {
+      text-align: justify;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    aside {
+      flex: 1;
+      background-color: #c9c9c9;
+      padding: 20px;
+      border-radius: 6px;
+      height: fit-content;
+    }
+
+    aside h2 {
+      margin-top: 0;
+      color: #222;
+    }
+
+    aside ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    aside ul li {
+      margin-bottom: 12px;
+    }
+
+    aside ul li a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    aside ul li a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background-color: #242424;
+      color: #fff;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 10px 0;
+      font-size: 14px;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      main {
+        margin-right: 0;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      nav .search-container {
+        margin: 10px 0;
+      }
+    }
+  </style>
+  <title>Geeky Bytes</title>
+</head>
+
+<body>
+  <header>
+    <h1>Geeky Bytes</h1>
+    <p>Your Gateway to Coding Excellence</p>
+  </header>
+
+  <nav>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">HTML</a>
+      <a href="#">CSS</a>
+      <a href="#">JavaScript</a>
+      <a href="#">ReactJS</a>
+    </div>
+
+    <div class="search-container">
+      <input type="search" placeholder="Search posts..." aria-label="Search posts" />
+    </div>
+
+    <div class="auth-icons">
+      <button title="Register" aria-label="Register">
+        <!-- User Plus Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="8.5" cy="7" r="4" />
+          <line x1="20" y1="8" x2="20" y2="14" />
+          <line x1="23" y1="11" x2="17" y2="11" />
+        </svg>
+        Register
+      </button>
+      <button title="Login" aria-label="Login">
+        <!-- Log In Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-in">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          <polyline points="10 17 15 12 10 7" />
+          <line x1="15" y1="12" x2="3" y2="12" />
+        </svg>
+        Login
+      </button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <main>
+      <article>
+        <h2>HTML</h2>
+        <p class="post-meta">
+          Published on December 11, 2023 by GeeksforGeeks
+        </p>
+        <p>
+          HTML stands for HyperText Markup Language. It is used to design the web pages. With the help of HTML,
+          you can create a complete website structure. HTML is the combination of Hypertext and Markup language.
+          Hypertext defines the link between the web pages and markup language defines the text document within
+          the tag that define the structure of web pages.
+        </p>
+      </article>
+
+      <article>
+        <h2>CSS</h2>
+        <p class="post-meta">
+          Published on December 10, 2023 by GeeksforGeeks
+        </p>
+        <p>
+          CSS (Cascading Style Sheets) is used to styles web pages. Cascading Style Sheets are fondly referred
+          to as CSS. The reason for using this is to simplify the process of making web pages presentable. It allows
+          you to apply styles on web pages. More importantly, it enables you to do this independently of the HTML
+          that makes up each web page.
+        </p>
+      </article>
+
+      <article>
+        <h2>JavaScript</h2>
+        <p class="post-meta">
+          Published on December 09, 2023 by GeeksforGeeks
+        </p>
+        <p>
+          JavaScript (JS) is the most popular lightweight, interpreted compiled programming language. It can
+          be used for both Client-side as well as Server-side developments. JavaScript also known as a scripting
+          language for web pages. This JavaScript Tutorial is designed to help both beginners and experienced
+          professionals master the fundamentals of JavaScript and unleash their creativity to build powerful web
+          applications. From basic syntax and data types to advanced topics such as object-oriented programming
+          and DOM manipulation.
+        </p>
+      </article>
+
+      <article>
+        <h2>ReactJS</h2>
+        <p class="post-meta">
+          Published on December 08, 2023 by GeeksforGeeks
+        </p>
+        <p>
+          ReactJS is a declarative, efficient, and flexible JavaScript library for building user interfaces.
+          It is an open-source, component-based front-end library that is responsible only for the view layer
+          of the application. ReactJS is not a framework, it is just a library developed by Facebook to solve
+          some problems that we were facing earlier.
+        </p>
+      </article>
+    </main>
+
+    <aside>
+      <h2>Recent Posts</h2>
+      <ul>
+        <li><a href="#">HTML</a></li>
+        <li><a href="#">CSS</a></li>
+        <li><a href="#">JavaScript</a></li>
+        <li><a href="#">ReactJS</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer>
+    <p>© 2025  Blog Website. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>
