@@ -2,21 +2,25 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login,authenticate,logout
-from .models import Category,Blog
+from .models import Category,Blog,PasswordReset
 from django.urls import reverse
 from django.core.mail import EmailMessage
 from django.utils import timezone
-from .models import PasswordReset  
 from django.conf import settings
 from .forms import BlogForm
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
+from django.core.paginator import Paginator
 
 # Create your views here.
 def home(request):
     category=Category.objects.all()
     blog=Blog.objects.filter(is_published=True).order_by('-created_at')
-    context={'category':category,'blog':blog}
+    page=Paginator(blog,4)
+    page_number=request.GET.get('page')
+    page_obj=page.get_page(page_number)
+    recent_posts = Blog.objects.filter(is_published=True).order_by('-created_at')
+    context={'category':category,'page_obj': page_obj,'blog': page_obj.object_list,'recent_posts': recent_posts}
     return render(request,'blog.html',context)
 
 def register_view(request):

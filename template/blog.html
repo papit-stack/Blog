@@ -1,4 +1,30 @@
 {%extends 'includes/base.html' %}
+{%block style%}
+<style>
+.pagination a {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin: 0 5px;
+  font-weight: bold;
+}
+.pagination {
+  margin-bottom: 100px; /* or adjust to the height of your footer */
+  z-index: 10; /* to ensure it's above footer if overlapping */
+  position: relative;
+}
+.pagination a:hover {
+  background-color: #0056b3;
+}
+
+.pagination span {
+  font-weight: 600;
+  color: #333;
+}
+</style>
+{%endblock%}
 {%block content%}
  <header>
     <h1>Geeky Bytes</h1>
@@ -87,11 +113,25 @@
       <h2>Recent Posts</h2>
       <ul>
         {%if blog%}
-        {%for i in blog|slice:":5" %}
+        {%for i in recent_posts|slice:":5" %}
         <li><a href="{%url 'blog_detail' i.slug %}">{{i.blog_title|capfirst}}</a></li>
         {%endfor%}
         {%endif%}
       </ul>
     </aside>
   </div>
+  <div style="text-align: center; margin-top: 40px;">
+  <div class="pagination">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}">← Previous</a>
+    {% endif %}
+
+    <span style="margin: 0 10px;">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Next →</a>
+    {% endif %}
+  </div>
+</div>
+
 {%endblock%}
