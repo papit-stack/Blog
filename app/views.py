@@ -8,6 +8,10 @@ from django.core.mail import EmailMessage
 from django.utils import timezone
 from .models import PasswordReset  
 from django.conf import settings
+from .forms import BlogForm
+from django.contrib.auth.decorators import login_required
+from django.utils.text import slugify
+
 # Create your views here.
 def home(request):
     category=Category.objects.all()
@@ -56,6 +60,7 @@ def login_view(request):
             return redirect('login')
     return render(request,'accounts/login.html')
 
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('login')
@@ -118,3 +123,29 @@ def reset_password(request, reset_id):
         return redirect('login')
 
     return render(request, 'accounts/reset_password.html', {'reset_id': reset_id})
+
+@login_required
+def add_post(request):
+    if request.method=="POST":
+        form=BlogForm(request.POST,request.FILES)
+        if form.is_valid():
+            blog=form.save(commit=False)
+            blog.author=request.user
+            if not blog.slug:
+                slug_base=slugify(blog.blog_title)
+                unique_slug=slug_base
+                counter=1
+                while Blog.objects.filter(slug=unique_slug).exists():
+                    unique_slug=f"{slug_base}-{counter}"
+                    counter+=1
+                blog.slug=unique_slug
+                blog.save()
+                return redirect('home')
+    else:
+        form=BlogForm()
+    context={'form':form}
+    return render(request,'post.html',context)
+
+def blog_detail(request,slug):
+    blog=get_object_or_404(Blog,slug=slug,is_published=True)
+    return render(request,'blog_detail.html',{'blog':blog})

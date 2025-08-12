@@ -1,0 +1,64 @@
+{% extends 'includes/base.html' %}
+
+{% block style %}
+<style>
+  .blog-detail {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .blog-detail h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .blog-meta {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+  }
+
+  .blog-description {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #444;
+    white-space: pre-line;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .back-link:hover {
+    color: #0056b3;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="blog-detail">
+  <h1>{{ blog.blog_title|capfirst }}</h1>
+  <p class="blog-meta">
+    Category: {{ blog.category }} |
+    Author: {{ blog.author.username|capfirst }} |
+    Published on {{ blog.created_at|date:"F d, Y" }}
+  </p>
+  {% if blog.image %}
+  <img src="{{ blog.image.url }}" alt="Blog Image" style="max-width:100%; margin-bottom:20px;">
+{% endif %}
+  <div class="blog-description">
+    {{ blog.blog_description|safe }}
+  </div>
+
+  <a href="{% url 'home' %}" class="back-link">← Back to Home</a>
+</div>
+{% endblock %}
