@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from django.utils.text import slugify
+
 # Create your models here.
 class PasswordReset(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -10,6 +12,18 @@ class Category(models.Model):
     category_title=models.CharField(max_length=100)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+    slug = models.SlugField(unique=True, blank=True)
+    # def save(self,*args,**kwargs):
+    #     if not self.slug:
+    #         base_slug = slugify(self.category_title)
+    #         slug = base_slug
+    #         counter = 1
+    #         while Category.objects.filter(slug=slug).exists():
+    #             slug = f"{base_slug}-{counter}"
+    #             counter += 1
+    #         self.slug = slug
+    #     super().save(*args, **kwargs)
+
     def __str__(self):
         return self.category_title
 

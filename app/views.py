@@ -150,6 +150,17 @@ def add_post(request):
     context={'form':form}
     return render(request,'post.html',context)
 
+@login_required
 def blog_detail(request,slug):
     blog=get_object_or_404(Blog,slug=slug,is_published=True)
     return render(request,'blog_detail.html',{'blog':blog})
+
+def category_detail(request,slug):
+    category_obj=get_object_or_404(Category,slug=slug)
+    blogs=Blog.objects.filter(category=category_obj,is_published=True)
+    categories=Category.objects.all()
+    paginator=Paginator(blogs,4)
+    page_number=request.GET.get('page')
+    page_obj=paginator.get_page(page_number)
+    # recent_posts = Blog.objects.filter(is_published=True).order_by('-created_at')
+    return render(request,'category_detail.html',{'category':categories,'blog':blogs,'category_obj':category_obj,'page_obj': page_obj,})

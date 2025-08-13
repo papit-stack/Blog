@@ -46,8 +46,7 @@
     <aside>
       <h2>Recent Posts</h2>
       <ul>
-        
-        {%for i in recent_posts|slice:":5" %}
+        {%for i in blog|slice:":5" %}
         <li><a href="{%url 'blog_detail' i.slug %}">{{i.blog_title|capfirst}}</a></li>
         {%endfor%}
         {%endif%}
