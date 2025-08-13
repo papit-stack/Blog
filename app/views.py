@@ -181,3 +181,26 @@ def search_post(request):
         'query': query,
         }
     return render(request,'search_post.html',context)
+
+@login_required
+def my_post(request):
+    posts = Blog.objects.filter(author=request.user)
+    return render(request, 'mypost.html', {'user_posts': posts})
+
+@login_required
+def delete(request,slug):
+    blog=get_object_or_404(Blog,slug=slug,author=request.user)
+    blog.delete()
+    return redirect('my-post')
+
+@login_required
+def update(request,slug):
+    obj=get_object_or_404(Blog,slug=slug,author=request.user)
+    if request.method=="POST":
+        form=BlogForm(request.POST,request.FILES,instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect('my-post')
+    else:
+        form = BlogForm(instance=obj)
+    return render(request,'post.html',{'form': form})

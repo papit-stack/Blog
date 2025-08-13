@@ -244,6 +244,9 @@
     <span style="color: #fff; font-weight: 600; margin-right: 10px;">
       Hello, {{ user.username|capfirst }}
     </span>
+    <a href="{% url 'my-post' %}" style="color: #fff; font-weight: 600; padding: 6px 10px; background-color: #007bff; border-radius: 4px; text-decoration: none;">
+  My Posts
+</a>
     <a href="{%url 'add_post' %}" style="color: #fff; font-weight: 600; padding: 6px 10px; background-color: #28a745; border-radius: 4px; text-decoration: none;">
     + Add Post
   </a>
