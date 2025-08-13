@@ -11,6 +11,7 @@ from .forms import BlogForm
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
@@ -164,3 +165,19 @@ def category_detail(request,slug):
     page_obj=paginator.get_page(page_number)
     # recent_posts = Blog.objects.filter(is_published=True).order_by('-created_at')
     return render(request,'category_detail.html',{'category':categories,'blog':blogs,'category_obj':category_obj,'page_obj': page_obj,})
+
+def search_post(request):
+    query = request.GET.get('q')
+    blogs = []
+    if query:
+        blogs = Blog.objects.filter(
+            Q(blog_title__icontains=query) |
+            Q(blog_short_description__icontains=query) |
+            Q(blog_description__icontains=query)|
+            Q(category__category_title__icontains=query)
+        ).filter(is_published=True).distinct()
+    context = {
+        'blogs': blogs,
+        'query': query,
+        }
+    return render(request,'search_post.html',context)

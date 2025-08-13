@@ -13,16 +13,6 @@ class Category(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     slug = models.SlugField(unique=True, blank=True)
-    # def save(self,*args,**kwargs):
-    #     if not self.slug:
-    #         base_slug = slugify(self.category_title)
-    #         slug = base_slug
-    #         counter = 1
-    #         while Category.objects.filter(slug=slug).exists():
-    #             slug = f"{base_slug}-{counter}"
-    #             counter += 1
-    #         self.slug = slug
-    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return self.category_title

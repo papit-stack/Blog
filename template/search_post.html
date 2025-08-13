@@ -1,0 +1,16 @@
+{% extends 'includes/base.html' %}
+
+{% block content %}
+  <h1>Search Results for "{{ query }}"</h1>
+
+  {% if blogs %}
+    {% for blog in blogs %}
+      <article>
+        <h2><a href="{% url 'blog_detail' blog.slug %}">{{ blog.blog_title }}</a></h2>
+        <p>{{ blog.blog_short_description }}</p>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p>No posts found matching your query.</p>
+  {% endif %}
+{% endblock %}
