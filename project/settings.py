@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-ivf!wf4bgt*4d#g2spg(@73$y@a&4*m*o@-ggj)sj%!6*&e$_1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['blog-nge6.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
