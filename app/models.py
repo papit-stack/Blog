@@ -39,3 +39,11 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.blog_title
+
+class Comment(models.Model):
+    comment=models.TextField()
+    blog=models.ForeignKey(Blog,on_delete=models.CASCADE,related_name='comments')
+    author=models.ForeignKey(User,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.comment

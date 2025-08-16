@@ -41,6 +41,63 @@
   .back-link:hover {
     color: #0056b3;
   }
+
+  /* Comments */
+  .comments-section {
+    margin-top: 40px;
+  }
+
+  .comment {
+    border-top: 1px solid #ddd;
+    padding: 15px 0;
+  }
+
+  .comment .author {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .comment .date {
+    font-size: 12px;
+    color: #999;
+    margin-left: 10px;
+  }
+
+  .comment .content {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #555;
+  }
+
+  .comment-form {
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+  }
+
+  .comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+
+  .comment-form button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-weight: 600;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .comment-form button:hover {
+    background-color: #0056b3;
+  }
 </style>
 {% endblock %}
 
@@ -54,11 +111,41 @@
   </p>
   {% if blog.image %}
   <img src="{{ blog.image.url }}" alt="Blog Image" style="max-width:100%; margin-bottom:20px;">
-{% endif %}
+  {% endif %}
   <div class="blog-description">
     {{ blog.blog_description|safe }}
   </div>
 
   <a href="{% url 'home' %}" class="back-link">← Back to Home</a>
+
+  <!-- Comments Section -->
+  <div class="comments-section">
+    <h2>Comments {{ comments.count }}</h2>
+
+    {% if comments %}
+      {% for comment in comments %}
+      <div class="comment">
+        <span class="author">{{ comment.author.username|capfirst }}</span>
+        <span class="date">{{ comment.created_at|date:"F d, Y H:i" }}</span>
+        <div class="content">{{ comment.comment|linebreaksbr }}</div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p>No comments yet. Be the first to comment!</p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <div class="comment-form">
+      <h3>Leave a Comment</h3>
+      <form method="post" action="{%url 'add_comment' blog.pk %}">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit">Submit Comment</button>
+      </form>
+    </div>
+    {% else %}
+      <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

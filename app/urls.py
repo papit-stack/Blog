@@ -10,6 +10,7 @@ urlpatterns = [
     path('reset-password/<uuid:reset_id>',views.reset_password,name='reset-password'),
     path('post-blog/',views.add_post,name='add_post'),
     path('blog/<slug:slug>/',views.blog_detail, name='blog_detail'),
+    path('blog/<int:blog_pk>/add_comment/', views.add_comment, name='add_comment'),
     path('category/<slug:slug>/',views.category_detail, name='category_detail'),
     path('search/', views.search_post, name='search'),
     path('my-post/', views.my_post, name='my-post'),

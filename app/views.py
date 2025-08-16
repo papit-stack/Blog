@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.core.mail import EmailMessage
 from django.utils import timezone
 from django.conf import settings
-from .forms import BlogForm
+from .forms import BlogForm,CommentForm
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
 from django.core.paginator import Paginator
@@ -154,7 +154,10 @@ def add_post(request):
 @login_required
 def blog_detail(request,slug):
     blog=get_object_or_404(Blog,slug=slug,is_published=True)
-    return render(request,'blog_detail.html',{'blog':blog})
+    comments = blog.comments.order_by('created_at')
+    comment_form=CommentForm()
+    context={'comment_form': comment_form,'blog':blog,'comments':comments}
+    return render(request,'blog_detail.html',context)
 
 def category_detail(request,slug):
     category_obj=get_object_or_404(Category,slug=slug)
@@ -204,3 +207,15 @@ def update(request,slug):
     else:
         form = BlogForm(instance=obj)
     return render(request,'post.html',{'form': form})
+@login_required
+def add_comment(request,blog_pk):
+    blog = get_object_or_404(Blog, pk=blog_pk,is_published=True)
+    if request.method=="POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.blog = blog
+            comment.author=request.user
+            comment.save()
+            return redirect('blog_detail', slug=blog.slug)
+    return redirect('blog_detail', slug=blog.slug)
